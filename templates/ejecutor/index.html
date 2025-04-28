@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejecutor de Código</title>
+    <link rel="stylesheet" href="{% static 'ejecutor/estilos.css' %}">
+</head>
+<body>
+    <h1>Ejecutar código</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <textarea name="code" rows="10" cols="50" placeholder="Escribe tu código aquí..."></textarea><br><br>
+        <button type="submit">Ejecutar</button>
+    </form>
+
+    {% if error_message %}
+        <p style="color:red;">{{ error_message }}</p>
+    {% endif %}
+
+    {% if output %}
+        <h2>Salida:</h2>
+        <pre>{{ output }}</pre>
+    {% endif %}
+
+    {% if error %}
+        <h2>Error:</h2>
+        <pre>{{ error }}</pre>
+    {% endif %}
+</body>
+</html>
