@@ -1,13 +1,33 @@
 services:
-  web:
-    build: .
-    container_name: code_executor_service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend_service
+
     volumes:
-      - .:/app
+      - ./backend/code_executor:/app/code_executor
+      - ./backend/manage.py:/app/manage.py
     ports:
       - "8000:8000"
     depends_on:
       - db
+    environment:
+      - DEBUG=1
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/code_executor_db
+
+  frontend:
+    build:
+      context: ./frontend/app
+      dockerfile: Dockerfile
+    container_name: frontend_service
+    volumes:
+      - ./frontend/app:/app
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
 
   db:
     image: postgres:15
