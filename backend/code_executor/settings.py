@@ -20,18 +20,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    # Nuestra app
     'code_executor.ejecutor',
-    
-    # Para permitir CORS si luego conectamos otros servicios
-    
     'corsheaders',
+    'rest_framework',
 ]
 
 # Middleware
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # Para permitir CORS
+    'corsheaders.middleware.CorsMiddleware', 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -71,12 +67,11 @@ DATABASES = {
         'NAME': 'code_executor_db',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': 'db',     # ¡Aquí 'db' es el nombre del servicio en docker-compose!
+        'HOST': 'db',     
         'PORT': '5432',
     }
 }
 
-# Password validation (opcional, para seguridad)
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -100,4 +95,8 @@ STATICFILES_DIRS = [
 ]
 
 # CORS
-CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
+

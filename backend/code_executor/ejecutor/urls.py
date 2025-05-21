@@ -1,9 +1,8 @@
 
-# ejecutor/urls.py
 from django.urls import path
 
-from . import views
+from .views import ejecutar_codigo
 
 urlpatterns = [
-    path('',views.index,name='index')
+    path('api/ejecutar/', ejecutar_codigo, name='ejecutar_codigo'),
 ]
