@@ -4,10 +4,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: backend_service
-
     volumes:
-      - ./backend/code_executor:/app/code_executor
-      - ./backend/manage.py:/app/manage.py
+      - ./backend:/app
     ports:
       - "8000:8000"
     depends_on:
@@ -22,7 +20,8 @@ services:
       dockerfile: Dockerfile
     container_name: frontend_service
     volumes:
-      - ./frontend/app:/app
+      - ./frontend/app/src:/app/src
+      - ./frontend/app/public:/app/public
     working_dir: /app
     ports:
       - "3000:3000"

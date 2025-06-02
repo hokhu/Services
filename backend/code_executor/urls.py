@@ -5,5 +5,5 @@ from .ejecutor import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('code_executor.ejecutor.urls')),
+    path('api/',include('code_executor.ejecutor.urls')),
 ]

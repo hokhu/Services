@@ -1,25 +1,53 @@
-import logo from './logo.svg';
+
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './App.css';
+
+// Páginas del juez virtual
+import { Home } from "./pages/Home";
+import { ProblemDetail } from "./pages/ProblemDetail";
+import { Competition } from "./pages/Competition";
+import { Profile } from "./pages/Profile";
+import { Navbar } from "./components/Navbar";
+import { Register } from "./pages/Register";
+
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <header className="app-header">
+          <div className="app-header-container">
+            <nav>
+              <a href="/">Inicio</a>
+              <a href="/registro">Registro</a>
+              <a href="/contacto">Contacto</a>
+            </nav>
+            <h1>Code executor</h1>
+          </div>
+        </header>
+
+        <Navbar />
+
+        <main className="app-main">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/problem/:id" element={<ProblemDetail />} />
+            <Route path="/competition" element={<Competition />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/registro" element={<Register />} />
+
+          </Routes>
+        </main>
+
+        <footer className="app-footer">
+          <p>© 2025 Juez Virtual. Todos los derechos reservados.</p>
+        </footer>
+      </div>
+    </Router>
   );
 }
 
 export default App;
+
