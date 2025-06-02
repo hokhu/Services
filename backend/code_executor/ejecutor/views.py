@@ -12,10 +12,12 @@ HEADERS = {
 def ejecutar_codigo(request):
     source_code = request.data.get("code")
     language_id = 71  # Python 3
+    stdin = request.data.get("stdin", "")
 
     payload = {
         "source_code": source_code,
-        "language_id": language_id
+        "language_id": language_id,
+        "stdin": stdin
     }
 
     try:
@@ -23,7 +25,8 @@ def ejecutar_codigo(request):
 
         if response.status_code == 200:
             result = response.json()
-            output = result.get('stdout')
+            output = result.get('stdout') or ""
+            output = output.replace("\r\n", "\n").strip()
             error = result.get('stderr') or result.get('compile_output')
 
             return Response({
