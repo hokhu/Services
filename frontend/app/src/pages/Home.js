@@ -1,9 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export function Home() {
   const [language, setLanguage] = useState("Python");
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
+    script.onload = function () {
+      if (window.voiceflow?.chat?.load) {
+        window.voiceflow.chat.load({
+          verify: { projectID: "683d07985e930b4a978b5eb9" },
+          url: "https://general-runtime.voiceflow.com",
+          versionID: "production",
+          voice: {
+            url: "https://runtime-api.voiceflow.com"
+          },
+          render: {
+            mode: "embedded",
+            target: document.getElementById("voiceflow-chat")
+          }
+        });
+      }
+    };
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   const handleRunCode = async () => {
     try {
@@ -12,7 +39,7 @@ export function Home() {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ code: code })
+        body: JSON.stringify({ code })
       });
 
       const data = await response.json();
@@ -52,6 +79,17 @@ export function Home() {
       <div className="output-box">
         <pre>{output}</pre>
       </div>
+
+      {/* Div para el chatbot de Voiceflow */}
+      <div
+        id="voiceflow-chat"
+        style={{
+          height: "500px",
+          width: "100%",
+          zIndex: 9999,
+          position: "relative"
+        }}
+      ></div>
     </div>
   );
 }
